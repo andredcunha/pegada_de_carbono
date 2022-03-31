@@ -27,7 +27,6 @@ public class ChamadoDao {
 	public void excluir(int idChamado) {
 		listaChamados.remove(idChamado);
 	}
-	
 	public List<Chamado> listar(){
 		return listaChamados;
 	}

@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.List;
+
 import dao.ChamadoDao;
 import model.Chamado;
 
@@ -17,6 +19,13 @@ public class ChamadoController {
 		}
 		ChamadoDao.getInstance().registrarChamado(chamado);
 	}
-
-
+	public void atualizarChamado(Chamado chamado) throws Exception {
+		if (chamado.getKmPercorrido() == null) {
+			throw new Exception("Não há KM registrado pra o chamado");
+		}
+		ChamadoDao.getInstance().registrarChamado(chamado);
+	}
+	public List<Chamado> listar(){
+		return ChamadoDao.getInstance().listar();
+	}
 }

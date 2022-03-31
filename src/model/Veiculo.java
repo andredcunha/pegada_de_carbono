@@ -46,7 +46,7 @@ public class Veiculo {
 	}
 // To string para facilitar reotrno do teste
 	public String toString() {
-		return "ID: " + idVeiculo + "\nPlaca: " + placa + "\nDispoivel:" + disponibilidade + "\nAutonomia: " + autonomia + "\n";
+		return "ID do veículo: " + idVeiculo + "\nPlaca: " + placa + "\nDispoivel:" + disponibilidade + "\nAutonomia: " + autonomia + "\n";
 	}
 //*******************************************************************************//
 }

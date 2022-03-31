@@ -8,11 +8,10 @@ import model.Colaborador;
 import model.Veiculo;
 
 public class Principal {
-
-	
 	
 	public static void main(String[] args) {
-		
+
+
 // Colaborador
 		Colaborador colaborador1 = new Colaborador("Andre", true);
 		colaborador1.setIdColaborador(1);
@@ -34,6 +33,7 @@ public class Principal {
 		} catch (Exception er) {
 			System.out.println(er.getMessage());
 		}
+		System.out.println ("**************** Dados dos colaboradores ****************");
 		for (Colaborador c : controller.listar()) {
 			System.out.println(c.toString());
 		}
@@ -58,10 +58,58 @@ public class Principal {
 		} catch (Exception er) {
 			System.out.println(er.getMessage());
 		}
+		System.out.println ("**************** Dados dos Veículos ****************");
 		for (Veiculo v : controller2.listar()) {
 			System.out.println(v.toString());
 		}		
 
+// Chamado abertura
+		Chamado chamado1 = new Chamado();
+		chamado1.setIdChamado(1);
+		chamado1.setIdColaborador(colaborador1);
+		chamado1.setIdVeiculo(veiculo1);
+
+		Chamado chamado2 = new Chamado();
+		chamado2.setIdChamado(2);
+		chamado2.setIdColaborador(colaborador2);
+		chamado2.setIdVeiculo(veiculo2);
+
+		Chamado chamado3 = new Chamado();
+		chamado3.setIdChamado(3);
+		chamado3.setIdColaborador(colaborador3);
+		chamado3.setIdVeiculo(veiculo3);
+
+		ChamadoController controller3 = new ChamadoController();
+
+		try {
+		controller3.registrarChamado(chamado1);
+		controller3.registrarChamado(chamado2);
+		controller3.registrarChamado(chamado3);
+		} catch (Exception er) {
+			System.out.println(er.getMessage());
+		}
+		System.out.println ("**************** Dados abertura chamados ****************");
+		for (Chamado ch : controller3.listar()) {
+			System.out.println(ch.toString_abertura());
+		}	
+// Chamado fechamento
+	chamado1.encerraChamado(1, 29.2 );
+	chamado2.encerraChamado(2, 40.5);
+	chamado3.encerraChamado(3, 13);
+	
+	try {
+//	controller3.registrarChamado(chamado1);
+	controller3.atualizarChamado(chamado1);
+	controller3.atualizarChamado(chamado2);
+	controller3.atualizarChamado(chamado3);
+	} catch (Exception er) {
+		System.out.println(er.getMessage());
+	}
+	System.out.println ("**************** Dados chamados encerrados ****************");
+	for (Chamado chfinished : controller3.listar()) {
+		System.out.println(chfinished.toString_encerrado());
+	}
+	
 	}
 }
 

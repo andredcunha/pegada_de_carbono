@@ -19,11 +19,8 @@ public class Chamado {
 //	Variável com cálculo do Co2 emitido no chamado
 	private Double co2Emitido;
 
-	public Chamado(Colaborador idColaborador, Veiculo idVeiculo) {
-		
-		this.idColaborador = idColaborador;
-		this.idVeiculo = idVeiculo;
-
+//	public Chamado(Colaborador idColaborador, Veiculo idVeiculo) {
+	public Chamado() {
 		//Data do chamado é gerada automaticamente na abertura 
 		this.dataChamdo = LocalDate.now();
 
@@ -53,8 +50,12 @@ public class Chamado {
 		this.idChamado = idChamado;
 	}
 // To string para facilitar reotrno do teste
-	public String toString() {
-		return "ID: " + idChamado + "\nColaborador: " + idColaborador + "\nVeículo:" + idVeiculo + "\nStatusChamado: " + statusChamado;
+	public String toString_abertura() {
+		return "ID do Chamado: " + idChamado + "\nColaborador atribuido: " + idColaborador.getNome() + "\nVeículo atribuído:" + idVeiculo.getPlaca() + "\nStatusChamado: " + statusChamado + "\n";
+	}
+// To string para facilitar reotrno do teste
+	public String toString_encerrado() {
+		return "ID do Chamado: " + idChamado + "\nColaborador atribuido: " + idColaborador.getNome() + "\nVeículo atribuído:" + idVeiculo.getPlaca() + "\nStatusChamado: " + statusChamado + "\nKM Percorrido: " + getKmPercorrido() + "\nCo2 Emitido: " + getCo2Emitido() +"\n";
 	}
 //*******************************************************************************//
 	public LocalDate getDataChamdo() {
