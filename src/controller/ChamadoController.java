@@ -3,6 +3,7 @@ package controller;
 import java.util.List;
 
 import dao.ChamadoDao;
+import dao.ColaboradorDao;
 import model.Chamado;
 
 public class ChamadoController {
@@ -24,6 +25,12 @@ public class ChamadoController {
 			throw new Exception("Não há KM registrado pra o chamado");
 		}
 		ChamadoDao.getInstance().registrarChamado(chamado);
+	}
+	public void excluir(int idChamado) throws Exception {
+		if (idChamado == 0) {
+			throw new Exception("Nenhum colaborador selecionado");
+		}
+		ChamadoDao.getInstance().excluir(idChamado);
 	}
 	public List<Chamado> listar(){
 		return ChamadoDao.getInstance().listar();

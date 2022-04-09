@@ -11,10 +11,13 @@ public class Veiculo {
 	private Double autonomia;
 	
 	
-	public Veiculo(String placa, boolean disponibilidade, Double autonomia) {
+	public Veiculo(String placa, Double autonomia) {
 		this.placa = placa;
-		this.disponibilidade = disponibilidade;
 		this.autonomia = autonomia;
+	}
+
+	public Veiculo() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getPlaca() {
@@ -46,7 +49,7 @@ public class Veiculo {
 	}
 // To string para facilitar reotrno do teste
 	public String toString() {
-		return "ID do veículo: " + idVeiculo + "\nPlaca: " + placa + "\nDispoivel:" + disponibilidade + "\nAutonomia: " + autonomia + "\n";
+		return "ID do veículo: " + idVeiculo + "\nPlaca: " + placa + "\nAutonomia: " + autonomia + "\n";
 	}
 //*******************************************************************************//
 }

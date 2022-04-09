@@ -11,7 +11,7 @@ public class Chamado {
 	private LocalDate dataChamdo;
 	private Colaborador idColaborador;
 	private Veiculo idVeiculo;
-	private boolean statusChamado; // Atribuído através dos métodos de abertura e fechamento
+	private int statusChamado; // Atribuído através dos métodos de abertura e fechamento
 
 //	Variável obrigatória para fechamento do chamado
 	private Double kmPercorrido;
@@ -25,12 +25,12 @@ public class Chamado {
 		this.dataChamdo = LocalDate.now();
 
 		//Na criação do chamado seu status é false, pois ainda não foi atendido
-		this.statusChamado = false;
+		this.statusChamado = 0;
 	}
 	
 	public void encerraChamado(int idChamado, double kmPercorrido) {
 		// idChamdo será usado em implementação futura para mudar o status do chamado correspondente no banco de dados
-		this.statusChamado = true;
+		this.statusChamado = 1;
 		this.kmPercorrido = kmPercorrido;
 		calculaCo2Emitido();
 	}
@@ -76,10 +76,10 @@ public class Chamado {
 	public void setIdVeiculo(Veiculo idVeiculo) {
 		this.idVeiculo = idVeiculo;
 	}
-	public boolean isStatusChamado() {
+	public int isStatusChamado() {
 		return statusChamado;
 	}
-	public void setStatusChamado(boolean statusChamado) {
+	public void setStatusChamado(int statusChamado) {
 		this.statusChamado = statusChamado;
 	}
 	public Double getKmPercorrido() {
