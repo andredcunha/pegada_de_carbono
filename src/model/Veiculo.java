@@ -9,8 +9,17 @@ public class Veiculo {
 	private String placa;
 	private boolean disponibilidade;
 	private Double autonomia;
+	private String modelo;
 	
 	
+	public String getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+
 	public Veiculo(String placa, Double autonomia) {
 		this.placa = placa;
 		this.autonomia = autonomia;

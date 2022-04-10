@@ -11,7 +11,9 @@ public class Chamado {
 	private LocalDate dataChamdo;
 	private Colaborador idColaborador;
 	private Veiculo idVeiculo;
-	private int statusChamado; // Atribuído através dos métodos de abertura e fechamento
+	private Boolean statusChamado; // Atribuído através dos métodos de abertura e fechamento
+
+	private String endereco;
 
 //	Variável obrigatória para fechamento do chamado
 	private Double kmPercorrido;
@@ -25,12 +27,12 @@ public class Chamado {
 		this.dataChamdo = LocalDate.now();
 
 		//Na criação do chamado seu status é false, pois ainda não foi atendido
-		this.statusChamado = 0;
+		this.statusChamado = false;
 	}
 	
 	public void encerraChamado(int idChamado, double kmPercorrido) {
 		// idChamdo será usado em implementação futura para mudar o status do chamado correspondente no banco de dados
-		this.statusChamado = 1;
+		this.statusChamado = true;
 		this.kmPercorrido = kmPercorrido;
 		calculaCo2Emitido();
 	}
@@ -55,7 +57,7 @@ public class Chamado {
 	}
 // To string para facilitar reotrno do teste
 	public String toString_encerrado() {
-		return "ID do Chamado: " + idChamado + "\nColaborador atribuido: " + idColaborador.getNome() + "\nVeículo atribuído:" + idVeiculo.getPlaca() + "\nStatusChamado: " + statusChamado + "\nKM Percorrido: " + getKmPercorrido() + "\nCo2 Emitido: " + getCo2Emitido() +"\n";
+		return "ID do Chamado: " + idChamado + "\nStatusChamado: " + statusChamado + "\nKM Percorrido: " + getKmPercorrido() + "\nCo2 Emitido: " + getCo2Emitido() +"\n";
 	}
 //*******************************************************************************//
 	public LocalDate getDataChamdo() {
@@ -76,10 +78,10 @@ public class Chamado {
 	public void setIdVeiculo(Veiculo idVeiculo) {
 		this.idVeiculo = idVeiculo;
 	}
-	public int isStatusChamado() {
+	public Boolean getStatusChamado() {
 		return statusChamado;
 	}
-	public void setStatusChamado(int statusChamado) {
+	public void setStatusChamado(Boolean statusChamado) {
 		this.statusChamado = statusChamado;
 	}
 	public Double getKmPercorrido() {
@@ -93,5 +95,12 @@ public class Chamado {
 	}
 	public void setCo2Emitido(Double co2Emitido) {
 		this.co2Emitido = co2Emitido;
+	}
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
 	}
 }

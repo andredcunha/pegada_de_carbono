@@ -14,7 +14,6 @@ import util.ConnectionUtil;
 public class ChamadoDao {
 
 	private static ChamadoDao instance;
-	private List<Chamado> listaChamados = new ArrayList<>();
 	private Connection con = ConnectionUtil.getConnection();
 	
 	public static ChamadoDao getInstance() {
@@ -26,34 +25,66 @@ public class ChamadoDao {
 	
 	public void registrarChamado(Chamado chamado) {
 		try {
-			
-//			String sql = "insert into chamado (data_chamado, status_chamdo, colaborador_id_motorista, frota_id_veiculo) values (?, ?, ?, ?)"; 
-			String sql = "insert into chamado(status_chamado, colaborador_id_motorista, frota_id_veiculo) values ( ?, ?, ?)";
+			String sql = "insert into chamado (data_chamado, status_chamado, colaborador_id_colaborador, frota_id_veiculo) values (?, ?, ?, ?)"; 
 			
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			
-//			pstmt.setDate(1, java.sql.Date.valueOf(chamado.getDataChamdo()));
-//			pstmt.setBoolean(2, false);
-//			pstmt.setInt(3, chamado.getIdColaborador().getIdColaborador());
-//			pstmt.setInt(4, chamado.getIdVeiculo().getIdVeiculo());
-
-			pstmt.setInt(1, 0);
-			pstmt.setInt(2, 127);
-			pstmt.setInt(3, 10);
-
+			pstmt.setDate(1, java.sql.Date.valueOf(chamado.getDataChamdo()));
+			pstmt.setBoolean(2, false);
+			pstmt.setInt(3, chamado.getIdColaborador().getIdColaborador());
+			pstmt.setInt(4, chamado.getIdVeiculo().getIdVeiculo());
+			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	public void atualizarChamado(Chamado chamado) {
-		listaChamados.set(chamado.getIdChamado(), chamado);
+		try {
+			String sql = "update chamado set status_chamado = ?, km_percorrido = ? where id_chamado = ?";
+		
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			
+			pstmt.setBoolean(1, chamado.getStatusChamado());
+			System.out.println("Status Chamado:" + chamado.getStatusChamado());
+			pstmt.setDouble(2, chamado.getKmPercorrido());
+			System.out.println("KM percorrdito:" + chamado.getKmPercorrido());
+			pstmt.setInt(3, chamado.getIdChamado());
+			System.out.println("ID Chamado:" + chamado.getIdChamado());
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void excluir(int idChamado) {
-		listaChamados.remove(idChamado);
+		try {
+			String sql = "delete from chamado where id_chamado = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, idChamado);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	public List<Chamado> listar(){
+		List<Chamado> listaChamados = new ArrayList<>();
+		try {
+			String sql = "select * from chamado";
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				Chamado ch = new Chamado();
+				ch.setIdChamado(rs.getInt("id_chamado"));
+				ch.setStatusChamado(rs.getBoolean("status_chamado"));
+				ch.setKmPercorrido(rs.getDouble("km_percorrido"));
+				
+				listaChamados.add(ch);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return listaChamados;
 	}
 }

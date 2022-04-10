@@ -2,8 +2,6 @@ package teste;
 
 import controller.ColaboradorController;
 
-import java.time.LocalDate;
-
 import controller.ChamadoController;
 import controller.VeiculoController;
 import model.Chamado;
@@ -23,7 +21,7 @@ public class Principal {
 //		excluiVeiculo();
 
 //		cadastraChamado();
-//		alteraChamado();
+		alteraChamado();
 //		excluiChamado();
 		
 	}
@@ -31,13 +29,13 @@ public class Principal {
 // Colaborador
 	public static void cadastraColaborador() {
 		Colaborador colaborador1 = new Colaborador("Andre", true);
-		colaborador1.setDataNascimento(LocalDate.of(1986, 05, 18));
+//		colaborador1.setDataNascimento(LocalDate.of(1986, 05, 18));
 		
 		Colaborador colaborador2 = new Colaborador("Fabiano", true);
-		colaborador2.setDataNascimento(LocalDate.of(1980, 05, 18));
+//		colaborador2.setDataNascimento(LocalDate.of(1980, 05, 18));
 		
 		Colaborador colaborador3 = new Colaborador("Leonardo", true);
-		colaborador3.setDataNascimento(LocalDate.of(1985, 05, 18));
+//		colaborador3.setDataNascimento(LocalDate.of(1985, 05, 18));
 		
 		ColaboradorController controller = new ColaboradorController();
 
@@ -56,7 +54,6 @@ public class Principal {
 
 	public static void alteraColaborador() {
 		Colaborador colaborador1 = new Colaborador("Andre", false);
-		colaborador1.setDataNascimento(LocalDate.of(1986, 05, 18));
 		colaborador1.setIdColaborador(1);		
 		
 		ColaboradorController controller = new ColaboradorController();
@@ -97,6 +94,9 @@ public class Principal {
 		Veiculo veiculo1 = new Veiculo("QHR3051", 30.5);
 		Veiculo veiculo2 = new Veiculo("IOC2347", 15.3);
 		Veiculo veiculo3 = new Veiculo("ABC3342", 15.2);
+		veiculo1.setDisponibilidade(true);
+		veiculo2.setDisponibilidade(true);
+		veiculo3.setDisponibilidade(true);
 		VeiculoController controller = new VeiculoController();
 		
 		try {
@@ -150,9 +150,13 @@ public class Principal {
 
 	public static void	cadastraChamado() {
 		Chamado chamado1 = new Chamado();
+		Colaborador colaborador1 = new Colaborador("Andre", true);
+		Veiculo veiculo1 = new Veiculo("QHR3051", 30.1);
+		colaborador1.setIdColaborador(1);
+		veiculo1.setIdVeiculo(1);
 		
-		chamado1.getIdColaborador();
-		chamado1.getIdVeiculo();
+		chamado1.setIdColaborador(colaborador1);
+		chamado1.setIdVeiculo(veiculo1);
 
 		ChamadoController controller = new ChamadoController();
 
@@ -169,10 +173,9 @@ public class Principal {
 
 	public static void	alteraChamado() {
 		Chamado chamado1 = new Chamado();
-		chamado1.setIdChamado(1);
-		chamado1.getIdColaborador();
-		chamado1.getIdVeiculo();
-		chamado1.setKmPercorrido(20.2);
+		chamado1.setIdChamado(2);
+		chamado1.setStatusChamado(true);
+		chamado1.setKmPercorrido(45.0);
 		
 		ChamadoController controller = new ChamadoController();
 
@@ -181,15 +184,16 @@ public class Principal {
 		} catch (Exception er) {
 			System.out.println(er.getMessage());
 		}
-		System.out.println ("**************** Dados abertura chamados ****************");
+		System.out.println ("**************** Dados fechamento chamado ****************");
 		for (Chamado ch : controller.listar()) {
-			System.out.println(ch.toString_abertura());
+			System.out.println(ch.toString_encerrado());
 		}
 	}
 
 	public static void	excluirChamado() {
 		Chamado chamado1 = new Chamado();
 		chamado1.setIdChamado(1);
+		
 		
 		ChamadoController controller = new ChamadoController();
 

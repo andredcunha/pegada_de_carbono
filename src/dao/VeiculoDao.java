@@ -8,14 +8,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Colaborador;
 import model.Veiculo;
 import util.ConnectionUtil;
 
 public class VeiculoDao {
 
 	private static VeiculoDao instance;
-	private List<Veiculo> listaVeiculos = new ArrayList<>();
 	private Connection con = ConnectionUtil.getConnection();
 	
 	public static VeiculoDao getInstance() {
@@ -27,11 +25,12 @@ public class VeiculoDao {
 	
 	public void salvar(Veiculo veiculo) {
 		try {
-			String sql = "insert into frota (placa, autonomia, disponibilidade) values ( ?, ?, ?)";
+			String sql = "insert into frota (placa, autonomia, disponibilidade, modelo) values ( ?, ?, ?, ?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, veiculo.getPlaca());
 			pstmt.setDouble(2, veiculo.getAutonomia());
 			pstmt.setBoolean(3, veiculo.isDisponibilidade());
+			pstmt.setString(4, veiculo.getModelo());
 			pstmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -40,12 +39,13 @@ public class VeiculoDao {
 	
 	public void atualizar(Veiculo veiculo) {
 		try {
-			String sql = "update frota set placa = ?, autonomia = ?, disponibilidade = ? where id_veiculo = ?";
+			String sql = "update frota set placa = ?, autonomia = ?, disponibilidade = ?, modelo = ? where id_veiculo = ?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, veiculo.getPlaca());
 			pstmt.setDouble(2, veiculo.getAutonomia());
 			pstmt.setBoolean(3, veiculo.isDisponibilidade());
-			pstmt.setInt(4, veiculo.getIdVeiculo());
+			pstmt.setString(4, veiculo.getModelo());
+			pstmt.setInt(5, veiculo.getIdVeiculo());
 			pstmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -75,6 +75,7 @@ public class VeiculoDao {
 				v.setPlaca(rs.getString("placa"));
 				v.setAutonomia(rs.getDouble("autonomia"));
 				v.setDisponibilidade(rs.getBoolean("disponibilidade"));
+				v.setModelo(rs.getString("modelo"));
 				listaVeiculos.add(v);
 			}
 		} catch (SQLException e) {

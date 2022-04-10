@@ -24,7 +24,7 @@ public class ChamadoController {
 		if (chamado.getKmPercorrido() == null) {
 			throw new Exception("Não há KM registrado pra o chamado");
 		}
-		ChamadoDao.getInstance().registrarChamado(chamado);
+		ChamadoDao.getInstance().atualizarChamado(chamado);
 	}
 	public void excluir(int idChamado) throws Exception {
 		if (idChamado == 0) {
