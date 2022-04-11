@@ -59,6 +59,10 @@ public class Chamado {
 	public String toString_encerrado() {
 		return "ID do Chamado: " + idChamado + "\nStatusChamado: " + statusChamado + "\nKM Percorrido: " + getKmPercorrido() + "\nCo2 Emitido: " + getCo2Emitido() +"\n";
 	}
+	// To string para facilitar reotrno do teste
+	public String toString_sem_fk() {
+		return "ID do Chamado: " + idChamado + "\nStatusChamado: " + statusChamado + "\n";
+		}
 //*******************************************************************************//
 	public LocalDate getDataChamdo() {
 		return dataChamdo;
@@ -98,9 +102,5 @@ public class Chamado {
 	}
 	public String getEndereco() {
 		return endereco;
-	}
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
 	}
 }

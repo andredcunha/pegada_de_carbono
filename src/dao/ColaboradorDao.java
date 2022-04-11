@@ -31,13 +31,10 @@ public class ColaboradorDao {
 	
 	public void salvar(Colaborador colaborador) {
 		try {
-//			String sql = "insert into colaborador (nome, data_nasc, habilitado) values ( ?, ?, ?)";
 			String sql = "insert into colaborador (nome, habilitado) values ( ?, ?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, colaborador.getNome());
 			pstmt.setBoolean(2, colaborador.isHabilitado());
-//			pstmt.setDate(2, java.sql.Date.valueOf(colaborador.getDataNascimento()));
-//			pstmt.setBoolean(3, colaborador.isHabilitado());
 			pstmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -46,13 +43,10 @@ public class ColaboradorDao {
 	
 	public void atualizar(Colaborador colaborador) {
 		try {
-//			String sql = "update colaborador set nome = ?, data_nasc = ?, habilitado = ? where id_colaborador = ?";
 			String sql = "update colaborador set nome = ?, habilitado = ? where id_colaborador = ?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, colaborador.getNome());
 			pstmt.setBoolean(2, colaborador.isHabilitado());
-//			pstmt.setDate(2, java.sql.Date.valueOf(colaborador.getDataNascimento()));
-//			pstmt.setBoolean(3, colaborador.isHabilitado());
 			pstmt.setInt(4, colaborador.getIdColaborador());
 			pstmt.execute();
 		} catch (SQLException e) {
@@ -81,7 +75,6 @@ public class ColaboradorDao {
 				Colaborador c = new Colaborador();
 				c.setIdColaborador(rs.getInt("id_colaborador"));
 				c.setNome(rs.getString("nome"));
-//				c.setDataNascimento(rs.getDate("data_nasc"));
 				c.setHabilitado(rs.getBoolean("habilitado"));
 				listaColaboradores.add(c);
 			}

@@ -5,8 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.Format;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Convert;
 
 import model.Chamado;
 import util.ConnectionUtil;
@@ -25,14 +28,15 @@ public class ChamadoDao {
 	
 	public void registrarChamado(Chamado chamado) {
 		try {
-			String sql = "insert into chamado (data_chamado, status_chamado, colaborador_id_colaborador, frota_id_veiculo) values (?, ?, ?, ?)"; 
+			String sql = "insert into chamado (data_chamado, status_chamado, colaborador_id_colaborador, frota_id_veiculo, km_percorrido ) values (?, ?, ?, ?, ?)"; 
 			
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			
 			pstmt.setDate(1, java.sql.Date.valueOf(chamado.getDataChamdo()));
-			pstmt.setBoolean(2, false);
+			pstmt.setBoolean(2, chamado.getStatusChamado());
 			pstmt.setInt(3, chamado.getIdColaborador().getIdColaborador());
 			pstmt.setInt(4, chamado.getIdVeiculo().getIdVeiculo());
+			pstmt.setDouble(5, chamado.getKmPercorrido());
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -77,7 +81,11 @@ public class ChamadoDao {
 			while (rs.next()) {
 				Chamado ch = new Chamado();
 				ch.setIdChamado(rs.getInt("id_chamado"));
+				ch.setDataChamdo(rs.getDate("data_chamado").toLocalDate());
 				ch.setStatusChamado(rs.getBoolean("status_chamado"));
+//				ch.setIdColaborador(rs.getInt("colaborador_id_colaborador"));
+//				ch.setIdVeiculo(rs.getInt("frota_id_veiculo "));
+
 				ch.setKmPercorrido(rs.getDouble("km_percorrido"));
 				
 				listaChamados.add(ch);

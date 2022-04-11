@@ -2,6 +2,8 @@ package teste;
 
 import controller.ColaboradorController;
 
+import java.time.LocalDate;
+
 import controller.ChamadoController;
 import controller.VeiculoController;
 import model.Chamado;
@@ -21,8 +23,9 @@ public class Principal {
 //		excluiVeiculo();
 
 //		cadastraChamado();
-		alteraChamado();
+//		alteraChamado();
 //		excluiChamado();
+		listarChamados();
 		
 	}
 
@@ -152,16 +155,18 @@ public class Principal {
 		Chamado chamado1 = new Chamado();
 		Colaborador colaborador1 = new Colaborador("Andre", true);
 		Veiculo veiculo1 = new Veiculo("QHR3051", 30.1);
-		colaborador1.setIdColaborador(1);
-		veiculo1.setIdVeiculo(1);
+		colaborador1.setIdColaborador(7);
+		veiculo1.setIdVeiculo(5);
 		
+		chamado1.setDataChamdo(LocalDate.now());
 		chamado1.setIdColaborador(colaborador1);
 		chamado1.setIdVeiculo(veiculo1);
+		chamado1.setKmPercorrido(20.9);
 
 		ChamadoController controller = new ChamadoController();
 
 		try {
-		controller.registrarChamado(chamado1);
+		controller.salvar(chamado1);
 		} catch (Exception er) {
 			System.out.println(er.getMessage());
 		}
@@ -180,7 +185,7 @@ public class Principal {
 		ChamadoController controller = new ChamadoController();
 
 		try {
-		controller.atualizarChamado(chamado1);
+		controller.salvar(chamado1);
 		} catch (Exception er) {
 			System.out.println(er.getMessage());
 		}
@@ -205,6 +210,12 @@ public class Principal {
 		System.out.println ("**************** Dados abertura chamados ****************");
 		for (Chamado ch : controller.listar()) {
 			System.out.println(ch.toString_abertura());
+		}
+	}
+	public static void listarChamados() {
+		ChamadoController controller = new ChamadoController();
+		for (Chamado ch : controller.listar()) {
+			System.out.println(ch.toString_sem_fk());
 		}
 	}
 //// Chamado fechamento

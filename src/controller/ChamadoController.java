@@ -3,12 +3,11 @@ package controller;
 import java.util.List;
 
 import dao.ChamadoDao;
-import dao.ColaboradorDao;
 import model.Chamado;
 
 public class ChamadoController {
 
-	public void registrarChamado(Chamado chamado) throws Exception {
+	public void salvar(Chamado chamado) throws Exception {
 		if (chamado.getDataChamdo() == null) {
 			throw new Exception("Data Inválida");
 		}
@@ -20,7 +19,7 @@ public class ChamadoController {
 		}
 		ChamadoDao.getInstance().registrarChamado(chamado);
 	}
-	public void atualizarChamado(Chamado chamado) throws Exception {
+	public void atualizar(Chamado chamado) throws Exception {
 		if (chamado.getKmPercorrido() == null) {
 			throw new Exception("Não há KM registrado pra o chamado");
 		}
