@@ -14,7 +14,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import controller.ColaboradorController;
 import model.Colaborador;
-import model.Veiculo;
 import view.tables.ColaboradorTableModel;
 
 import javax.swing.JScrollPane;

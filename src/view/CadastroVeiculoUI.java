@@ -10,7 +10,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import controller.ColaboradorController;
 import controller.VeiculoController;
+import model.Colaborador;
 import model.Veiculo;
 
 import javax.swing.JComboBox;
@@ -24,6 +26,7 @@ public class CadastroVeiculoUI extends JInternalFrame {
 	private JTextField txtModelo;
 	private JTextField txtPlaca;
 	private JTextField txtAutonomia;
+	private Veiculo veiculo;
 
 	/**
 	 * Launch the application.
@@ -75,16 +78,25 @@ public class CadastroVeiculoUI extends JInternalFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			try {
-				Veiculo veiculo = new Veiculo();
-				veiculo.setModelo(txtModelo.getText());
-				veiculo.setPlaca(txtPlaca.getText());
-				veiculo.setAutonomia(Double.parseDouble(txtAutonomia.getText()));
-//				colaborador.setHabilitado(cboxHabilitado.get())
-				new VeiculoController().salvar(veiculo);
-				JOptionPane.showMessageDialog(null, "Veiculo salvo com sucesso");
+				if (veiculo != null && veiculo.getIdVeiculo() > 0) {
+					veiculo.setModelo(txtModelo.getText());
+					veiculo.setPlaca(txtPlaca.getText());
+					veiculo.setAutonomia(Double.parseDouble(txtAutonomia.getText()));
+//					Verificar como pegar booleano
+					new VeiculoController().atualizar((veiculo));
+					JOptionPane.showMessageDialog(null, "Veiculo atualizado com sucesso");
+				} else {
+					Veiculo veiculo = new Veiculo();
+					veiculo.setModelo(txtModelo.getText());
+					veiculo.setPlaca(txtPlaca.getText());
+					veiculo.setAutonomia(Double.parseDouble(txtAutonomia.getText()));
+//					Verificar como pegar booleano
+					new VeiculoController().salvar(veiculo);
+					JOptionPane.showMessageDialog(null, "Colaborador salvo com sucesso");
+				}
 				dispose();
 			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(null, "Erro ao salvar Veiculo");
+				JOptionPane.showMessageDialog(null, "Erro ao salvar Colaborador");
 			}
 		}
 		});
@@ -140,5 +152,20 @@ public class CadastroVeiculoUI extends JInternalFrame {
 		getContentPane().setLayout(groupLayout);
 
 	}
+	public void setVeiculoEdicao(Veiculo veiculo) {
+		this.veiculo = veiculo;
+		preeencheFormulario();
+	}
+	
+	private void preeencheFormulario() {
+		if(veiculo != null) {
+			txtModelo.setText(veiculo.getModelo());
+			txtPlaca.setText(veiculo.getPlaca());
+			txtAutonomia.setText(veiculo.getAutonomia().toString());
+//			Falta metodo para pegar booleano de disponibilidade
+		}
+		
+	}
+	
 
 }
