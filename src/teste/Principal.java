@@ -25,7 +25,7 @@ public class Principal {
 //		cadastraChamado();
 //		alteraChamado();
 //		excluiChamado();
-		listarChamados();
+//		listarChamados();
 		
 	}
 
@@ -98,8 +98,11 @@ public class Principal {
 		Veiculo veiculo2 = new Veiculo("IOC2347", 15.3);
 		Veiculo veiculo3 = new Veiculo("ABC3342", 15.2);
 		veiculo1.setDisponibilidade(true);
+		veiculo1.setModelo("GOL");
 		veiculo2.setDisponibilidade(true);
+		veiculo2.setModelo("PRISMA");
 		veiculo3.setDisponibilidade(true);
+		veiculo3.setModelo("UNO");
 		VeiculoController controller = new VeiculoController();
 		
 		try {

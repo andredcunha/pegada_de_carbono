@@ -22,6 +22,7 @@ import javax.swing.JCheckBox;
 
 public class CadastroColaboradorUI extends JInternalFrame {
 	private JTextField txtNome;
+	private Colaborador colaborador;
 
 	/**
 	 * Launch the application.
@@ -43,6 +44,7 @@ public class CadastroColaboradorUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public CadastroColaboradorUI() {
+		
 		setClosable(true);
 		setTitle("Cadastro de Colaboradores");
 		setBounds(100, 100, 598, 165);
@@ -63,11 +65,18 @@ public class CadastroColaboradorUI extends JInternalFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Colaborador colaborador = new Colaborador();
-					colaborador.setNome(txtNome.getText());
-//					colaborador.setHabilitado(cboxHabilitado.get())
-					new ColaboradorController().salvar(colaborador);
-					JOptionPane.showMessageDialog(null, "Colaborador salvo com sucesso");
+					if (colaborador != null && colaborador.getIdColaborador() > 0) {
+						colaborador.setNome(txtNome.getText());
+//						Verificar como pegar booleano
+						new ColaboradorController().atualizar((colaborador));
+						JOptionPane.showMessageDialog(null, "Colaborador atualizado com sucesso");
+					} else {
+						Colaborador colaborador = new Colaborador();
+						colaborador.setNome(txtNome.getText());
+	//					colaborador.setHabilitado(cboxHabilitado.get())
+						new ColaboradorController().salvar(colaborador);
+						JOptionPane.showMessageDialog(null, "Colaborador salvo com sucesso");
+					}
 					dispose();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(null, "Erro ao salvar Colaborador");
@@ -111,5 +120,17 @@ public class CadastroColaboradorUI extends JInternalFrame {
 		);
 		getContentPane().setLayout(groupLayout);
 
+	}
+	public void setColaboradorEdicao(Colaborador colaborador) {
+		this.colaborador = colaborador;
+		preeencheFormulario();
+	}
+	
+	private void preeencheFormulario() {
+		if(colaborador != null) {
+			txtNome.setText(colaborador.getNome());
+//			Falta metodo para pegar booleano de habilitado
+		}
+		
 	}
 }

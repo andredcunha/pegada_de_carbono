@@ -47,7 +47,7 @@ public class ColaboradorDao {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, colaborador.getNome());
 			pstmt.setBoolean(2, colaborador.isHabilitado());
-			pstmt.setInt(4, colaborador.getIdColaborador());
+			pstmt.setInt(3, colaborador.getIdColaborador());
 			pstmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
