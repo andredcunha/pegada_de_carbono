@@ -27,6 +27,7 @@ public class CadastroVeiculoUI extends JInternalFrame {
 	private JTextField txtPlaca;
 	private JTextField txtAutonomia;
 	private Veiculo veiculo;
+	private boolean is_disponivel;
 
 	/**
 	 * Launch the application.
@@ -82,7 +83,7 @@ public class CadastroVeiculoUI extends JInternalFrame {
 					veiculo.setModelo(txtModelo.getText());
 					veiculo.setPlaca(txtPlaca.getText());
 					veiculo.setAutonomia(Double.parseDouble(txtAutonomia.getText()));
-//					Verificar como pegar booleano
+					veiculo.setDisponibilidade(is_disponivel);
 					new VeiculoController().atualizar((veiculo));
 					JOptionPane.showMessageDialog(null, "Veiculo atualizado com sucesso");
 				} else {
@@ -90,9 +91,9 @@ public class CadastroVeiculoUI extends JInternalFrame {
 					veiculo.setModelo(txtModelo.getText());
 					veiculo.setPlaca(txtPlaca.getText());
 					veiculo.setAutonomia(Double.parseDouble(txtAutonomia.getText()));
-//					Verificar como pegar booleano
+					veiculo.setDisponibilidade(is_disponivel);
 					new VeiculoController().salvar(veiculo);
-					JOptionPane.showMessageDialog(null, "Colaborador salvo com sucesso");
+					JOptionPane.showMessageDialog(null, "Veiculo salvo com sucesso");
 				}
 				dispose();
 			} catch (Exception ex) {
@@ -102,6 +103,15 @@ public class CadastroVeiculoUI extends JInternalFrame {
 		});
 		
 		JCheckBox chbxDisponibilidade = new JCheckBox("Dispon\u00EDvel");
+		chbxDisponibilidade.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					setIsDisponivel (chbxDisponibilidade.isSelected());
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(null, "Seleção não está funcionando");
+				}
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -155,6 +165,10 @@ public class CadastroVeiculoUI extends JInternalFrame {
 	public void setVeiculoEdicao(Veiculo veiculo) {
 		this.veiculo = veiculo;
 		preeencheFormulario();
+	}
+	public void setIsDisponivel(Boolean is_disponivel) {
+		this.is_disponivel = is_disponivel;
+		System.out.println("Status do Check box:" + is_disponivel);
 	}
 	
 	private void preeencheFormulario() {
