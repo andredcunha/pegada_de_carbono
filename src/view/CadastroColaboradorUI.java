@@ -13,15 +13,20 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import controller.ColaboradorController;
 
 import javax.swing.JComboBox;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import model.Colaborador;
 import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
 
 public class CadastroColaboradorUI extends JInternalFrame {
 	private JTextField txtNome;
+	private boolean is_habilitado;
 	private Colaborador colaborador;
 
 	/**
@@ -67,13 +72,14 @@ public class CadastroColaboradorUI extends JInternalFrame {
 				try {
 					if (colaborador != null && colaborador.getIdColaborador() > 0) {
 						colaborador.setNome(txtNome.getText());
+						colaborador.setHabilitado(is_habilitado);
 //						Verificar como pegar booleano
 						new ColaboradorController().atualizar((colaborador));
 						JOptionPane.showMessageDialog(null, "Colaborador atualizado com sucesso");
 					} else {
 						Colaborador colaborador = new Colaborador();
 						colaborador.setNome(txtNome.getText());
-	//					colaborador.setHabilitado(cboxHabilitado.get())
+					    colaborador.setHabilitado(is_habilitado);
 						new ColaboradorController().salvar(colaborador);
 						JOptionPane.showMessageDialog(null, "Colaborador salvo com sucesso");
 					}
@@ -85,6 +91,15 @@ public class CadastroColaboradorUI extends JInternalFrame {
 		});
 		
 		JCheckBox cboxHabilitado = new JCheckBox("Colaborador Habilitado");
+		cboxHabilitado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					setIsHabilitado (cboxHabilitado.isSelected());
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(null, "Seleção não está funcionando");
+				}
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -124,6 +139,11 @@ public class CadastroColaboradorUI extends JInternalFrame {
 	public void setColaboradorEdicao(Colaborador colaborador) {
 		this.colaborador = colaborador;
 		preeencheFormulario();
+	}
+
+	public void setIsHabilitado(Boolean is_habilitado) {
+		this.is_habilitado = is_habilitado;
+		System.out.println("Status do Check box:" + is_habilitado);
 	}
 	
 	private void preeencheFormulario() {
