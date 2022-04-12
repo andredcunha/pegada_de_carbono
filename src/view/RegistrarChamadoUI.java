@@ -26,11 +26,13 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.awt.event.ActionEvent;
+import javax.swing.JCheckBox;
 
 public class RegistrarChamadoUI extends JInternalFrame {
 	private JTextField txtDataChamado;
 	private JTextField textField;
 	private Chamado chamado;
+	private boolean is_encerrado;
 	
 	JComboBox<Colaborador> cbColaborador = new JComboBox();
 	JComboBox<Veiculo> cbVeiculo = new JComboBox();
@@ -85,11 +87,6 @@ public class RegistrarChamadoUI extends JInternalFrame {
 		textField = new JTextField();
 		textField.setColumns(10);
 		
-		JLabel jlStatus = new JLabel("Status:");
-		
-		JComboBox cbStatus = new JComboBox();
-		cbStatus.setModel(new DefaultComboBoxModel(new String[] {"EM ABERTO", "EM ANDAMENTO", "CONCLU\u00CDDO"}));
-		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -107,6 +104,7 @@ public class RegistrarChamadoUI extends JInternalFrame {
 					LocalDate dataChamado = LocalDate.parse(txtDataChamado.getText(), formatter);
 					Chamado chamado = new Chamado ();
 					chamado.setDataChamdo(dataChamado);
+					chamado.setStatusChamado(is_encerrado);
 //					chamado.setIdColaborador(colaborador);
 //					chamado.setIdVeiculo(veiculo);
 					chamado.setIdColaborador(colaborador);
@@ -128,20 +126,29 @@ public class RegistrarChamadoUI extends JInternalFrame {
 		
 		JLabel jlResultadoCO2 = new JLabel("XY,XY");
 		jlResultadoCO2.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		JCheckBox chbxStatusChamado = new JCheckBox("Chamado Encerrado");
+		chbxStatusChamado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					setIsStatusChamado (chbxStatusChamado.isSelected());
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(null, "Seleção não está funcionando");
+				}
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup()
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 							.addComponent(jlDataChamado)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(txtDataChamado, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(jlStatus)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(cbStatus, 0, 169, Short.MAX_VALUE))
+							.addGap(33)
+							.addComponent(chbxStatusChamado))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(jlColaborador)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -172,8 +179,7 @@ public class RegistrarChamadoUI extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(jlDataChamado)
 						.addComponent(txtDataChamado, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jlStatus)
-						.addComponent(cbStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(chbxStatusChamado))
 					.addGap(10)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(jlColaborador)
@@ -192,7 +198,7 @@ public class RegistrarChamadoUI extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnCancelar)
 						.addComponent(btnSalvar))
-					.addContainerGap(19, Short.MAX_VALUE))
+					.addContainerGap(25, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
 
@@ -201,7 +207,10 @@ public class RegistrarChamadoUI extends JInternalFrame {
 		this.chamado = chamado;
 		preeencheFormulario();
 	}
-	
+	public void setIsStatusChamado(Boolean is_encerrado) {
+		this.is_encerrado = is_encerrado;
+		System.out.println("Status do Check box:" + is_encerrado);
+	}
 	private void preeencheFormulario() {
 		if(chamado != null) {
 			txtDataChamado.setText(chamado.getDataChamdo().toString());
