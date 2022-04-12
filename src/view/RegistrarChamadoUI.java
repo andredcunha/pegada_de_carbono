@@ -30,7 +30,7 @@ import javax.swing.JCheckBox;
 
 public class RegistrarChamadoUI extends JInternalFrame {
 	private JTextField txtDataChamado;
-	private JTextField textField;
+	private JTextField txKmPercorrido;
 	private Chamado chamado;
 	private boolean is_encerrado;
 	
@@ -84,8 +84,9 @@ public class RegistrarChamadoUI extends JInternalFrame {
 		
 		JLabel jlDistancia = new JLabel("Dist\u00E2ncia:");
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		txKmPercorrido = new JTextField();
+		txKmPercorrido.setText("0");
+		txKmPercorrido.setColumns(10);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
@@ -98,17 +99,21 @@ public class RegistrarChamadoUI extends JInternalFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Colaborador colaborador = (Colaborador) cbColaborador.getSelectedItem();
+				int IdColaborador = colaborador.getIdColaborador();
+				System.out.println("ID Colaborador filtrado:" + IdColaborador);
 				Veiculo veiculo = (Veiculo) cbVeiculo.getSelectedItem();
+				int IdVeiculo = veiculo.getIdVeiculo();
+				System.out.println("ID Veiculo filtrado:" + IdVeiculo);
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 				try {
 					LocalDate dataChamado = LocalDate.parse(txtDataChamado.getText(), formatter);
 					Chamado chamado = new Chamado ();
 					chamado.setDataChamdo(dataChamado);
 					chamado.setStatusChamado(is_encerrado);
-//					chamado.setIdColaborador(colaborador);
-//					chamado.setIdVeiculo(veiculo);
+					chamado.setKmPercorrido(Double.parseDouble(txKmPercorrido.getText()));
 					chamado.setIdColaborador(colaborador);
 					chamado.setIdVeiculo(veiculo);
+					chamado.setIdColaborador(colaborador);
 					System.out.println("Data convertida: " + dataChamado);
 					System.out.println("ID Colaborador: " + colaborador);
 					System.out.println("ID Veiculo: " + veiculo);
@@ -117,6 +122,7 @@ public class RegistrarChamadoUI extends JInternalFrame {
 				} catch (ParseException e1) {
 					JOptionPane.showMessageDialog(null, "Erro ao transformar data");
 				} catch (Exception e1) {
+					System.out.println("Erro:" + e1);
 					JOptionPane.showMessageDialog(null, "Erro ao registrar chamado");
 				}
 			}
@@ -160,7 +166,7 @@ public class RegistrarChamadoUI extends JInternalFrame {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(jlDistancia)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(txKmPercorrido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
 							.addComponent(jlResultado)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
@@ -191,7 +197,7 @@ public class RegistrarChamadoUI extends JInternalFrame {
 					.addGap(36)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(jlDistancia)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txKmPercorrido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(jlResultado)
 						.addComponent(jlResultadoCO2))
 					.addGap(46)
