@@ -7,17 +7,33 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import controller.ChamadoController;
+import controller.ColaboradorController;
+import controller.VeiculoController;
+import model.Chamado;
+import model.Colaborador;
+import model.Veiculo;
+
 import javax.swing.JTextField;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.awt.event.ActionEvent;
 
 public class RegistrarChamadoUI extends JInternalFrame {
 	private JTextField txtDataChamado;
 	private JTextField textField;
+	private Chamado chamado;
+	
+	JComboBox<Colaborador> cbColaborador = new JComboBox();
+	JComboBox<Veiculo> cbVeiculo = new JComboBox();
 
 	/**
 	 * Launch the application.
@@ -43,13 +59,21 @@ public class RegistrarChamadoUI extends JInternalFrame {
 		setTitle("Registrar Chamado");
 		setBounds(100, 100, 495, 277);
 		
-		JComboBox cbColaborador = new JComboBox();
+		DefaultComboBoxModel<Colaborador> modelColaborador = new DefaultComboBoxModel<Colaborador>();
+		for(Colaborador colaborador : new ColaboradorController().listar()) {
+			modelColaborador.addElement(colaborador);
+		}
+		cbColaborador.setModel(modelColaborador);
+
+		DefaultComboBoxModel<Veiculo> modelVeiculo = new DefaultComboBoxModel<Veiculo>();
+		for(Veiculo veiculo: new VeiculoController().listar()) {
+			modelVeiculo.addElement(veiculo);
+		}
+		cbVeiculo.setModel(modelVeiculo);
 		
 		JLabel jlColaborador = new JLabel("Colaborador:");
 		
 		JLabel jlVeiculo = new JLabel("Ve\u00EDculo:");
-		
-		JComboBox cbVeiculo = new JComboBox();
 		
 		JLabel jlDataChamado = new JLabel("Data Chamado:");
 		
@@ -76,7 +100,27 @@ public class RegistrarChamadoUI extends JInternalFrame {
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO - Ação do botão salvar
+				Colaborador colaborador = (Colaborador) cbColaborador.getSelectedItem();
+				Veiculo veiculo = (Veiculo) cbVeiculo.getSelectedItem();
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				try {
+					LocalDate dataChamado = LocalDate.parse(txtDataChamado.getText(), formatter);
+					Chamado chamado = new Chamado ();
+					chamado.setDataChamdo(dataChamado);
+//					chamado.setIdColaborador(colaborador);
+//					chamado.setIdVeiculo(veiculo);
+					chamado.setIdColaborador(colaborador);
+					chamado.setIdVeiculo(veiculo);
+					System.out.println("Data convertida: " + dataChamado);
+					System.out.println("ID Colaborador: " + colaborador);
+					System.out.println("ID Veiculo: " + veiculo);
+					new ChamadoController().salvar(chamado);
+					JOptionPane.showMessageDialog(null, "Chamado registrado com sucesso");
+				} catch (ParseException e1) {
+					JOptionPane.showMessageDialog(null, "Erro ao transformar data");
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Erro ao registrar chamado");
+				}
 			}
 		});
 		
@@ -153,5 +197,16 @@ public class RegistrarChamadoUI extends JInternalFrame {
 		getContentPane().setLayout(groupLayout);
 
 	}
-
+	public void setChamadoEdicao(Chamado chamado) {
+		this.chamado = chamado;
+		preeencheFormulario();
+	}
+	
+	private void preeencheFormulario() {
+		if(chamado != null) {
+			txtDataChamado.setText(chamado.getDataChamdo().toString());
+//		Verificar como pegar as chaves e setar box de seleção
+		}
+		
+	}
 }

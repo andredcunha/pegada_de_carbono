@@ -41,7 +41,7 @@ public class PrincipalUI extends JFrame {
 	public PrincipalUI() {
 		setTitle("Pegada de Carbono");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 649, 354);
+		setBounds(100, 100, 900, 548);
 		
 		JMenuBar jmMenuPrincipal = new JMenuBar();
 		setJMenuBar(jmMenuPrincipal);
