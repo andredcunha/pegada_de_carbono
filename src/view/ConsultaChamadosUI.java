@@ -13,8 +13,11 @@ import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import controller.ChamadoController;
+import controller.VeiculoController;
 import model.Chamado;
+import model.Veiculo;
 import view.tables.ChamadoTableModel;
+import view.tables.VeiculoTableModel;
 
 import javax.swing.JScrollPane;
 
@@ -43,7 +46,7 @@ public class ConsultaChamadosUI extends JInternalFrame {
 	public ConsultaChamadosUI() {
 		setClosable(true);
 		setTitle("Consulta de Chamados");
-		setBounds(100, 100, 652, 332);
+		setBounds(100, 100, 743, 399);
 		
 		JButton btnFechar = new JButton("Fechar");
 		btnFechar.addActionListener(new ActionListener() {
@@ -55,7 +58,11 @@ public class ConsultaChamadosUI extends JInternalFrame {
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO - Ação do botão editar
+				Chamado chamado = new ChamadoTableModel(new ChamadoController().listar()).get(jtChamados.getSelectedRow());
+				RegistrarChamadoUI cadChamadoUI = new RegistrarChamadoUI();
+				cadChamadoUI.setChamadoEdicao(chamado);
+				cadChamadoUI.setVisible(true);
+				getParent().add(cadChamadoUI, 0);
 			}
 		});
 		
@@ -85,34 +92,33 @@ public class ConsultaChamadosUI extends JInternalFrame {
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap(386, Short.MAX_VALUE)
+					.addComponent(btnAtualizar)
+					.addGap(18)
+					.addComponent(btnExcluir)
+					.addGap(18)
+					.addComponent(btnEditar)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnFechar)
+					.addGap(59))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(276)
-							.addComponent(btnAtualizar)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnExcluir)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnEditar)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnFechar))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 585, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(41, Short.MAX_VALUE))
+					.addContainerGap()
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 694, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(51, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 266, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnFechar)
 						.addComponent(btnEditar)
+						.addComponent(btnFechar)
 						.addComponent(btnExcluir)
 						.addComponent(btnAtualizar))
-					.addContainerGap(30, Short.MAX_VALUE))
+					.addContainerGap(52, Short.MAX_VALUE))
 		);
 		
 		jtChamados = new JTable();

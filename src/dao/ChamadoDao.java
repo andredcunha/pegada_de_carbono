@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Chamado;
-
+import model.Colaborador;
+import model.Veiculo;
 import util.ConnectionUtil;
 
 public class ChamadoDao {
@@ -53,6 +54,7 @@ public class ChamadoDao {
 			System.out.println("KM percorrdito:" + chamado.getKmPercorrido());
 			pstmt.setInt(3, chamado.getIdChamado());
 			System.out.println("ID Chamado:" + chamado.getIdChamado());
+			
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -81,9 +83,16 @@ public class ChamadoDao {
 				ch.setIdChamado(rs.getInt("id_chamado"));
 				ch.setDataChamdo(rs.getDate("data_chamado").toLocalDate());
 				ch.setStatusChamado(rs.getBoolean("status_chamado"));
-//				ch.setIdColaborador(rs.getInt("colaborador_id_colaborador"));
-//				ch.setIdVeiculo(rs.getInt("frota_id_veiculo "));
+				
+				Colaborador col = new Colaborador();
+				col.setIdColaborador(rs.getInt("colaborador_id_colaborador"));
+				Veiculo vel = new Veiculo();
+				vel.setIdVeiculo(rs.getInt("frota_id_veiculo"));
+				
+				ch.setIdColaborador(col);
+				ch.setIdVeiculo(vel);
 
+				
 				ch.setKmPercorrido(rs.getDouble("km_percorrido"));
 				
 				listaChamados.add(ch);
