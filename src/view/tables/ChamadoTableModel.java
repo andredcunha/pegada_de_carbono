@@ -16,6 +16,7 @@ public class ChamadoTableModel extends AbstractTableModel {
 	private static final int COL_STATUS = 2;
 	private static final int COL_COLABORADOR = 3;
 	private static final int COL_VEICULO = 4;
+	private static final int COL_CO2 = 5;
 
 	private List<Chamado> valores;       
 
@@ -31,7 +32,7 @@ public class ChamadoTableModel extends AbstractTableModel {
 
 	public int getColumnCount() {
 		//Quantas colunas tem a tabela? Nesse exemplo, s� 2.
-		return 5;
+		return 6;
 	}
 
 	public String getColumnName(int column) {
@@ -41,6 +42,7 @@ public class ChamadoTableModel extends AbstractTableModel {
 		if (column == COL_STATUS) return "Status";
 		if (column == COL_COLABORADOR) return "Colaborador";
 		if (column == COL_VEICULO) return "Veiculo";
+		if (column == COL_CO2) return "Co2 Emitido";
 		return ""; //Nunca deve ocorrer
 	}
 
@@ -57,10 +59,13 @@ public class ChamadoTableModel extends AbstractTableModel {
 					return chamado.getStatusChamado();
 		else 
 			if (column == COL_COLABORADOR) 
-					return chamado.getIdColaborador();
+					return chamado.getIdColaborador().getIdColaborador();
 		else 
 			if (column == COL_VEICULO)
-					return chamado.getIdVeiculo();
+					return chamado.getIdVeiculo().getIdVeiculo();
+		else 
+			if (column == COL_CO2)
+					return chamado.getCo2Emitido();
 		return ""; //Nunca deve ocorrer
 	}
 
@@ -77,11 +82,11 @@ public class ChamadoTableModel extends AbstractTableModel {
 			if (columnIndex == COL_STATUS) 
 				chamado.setStatusChamado(Boolean.parseBoolean((aValue.toString())));
 //		else 
-//			if (columnIndex == COL_COLABORADOR) 
-//				chamado.setIdColaborador(Integer.parseInt(aValue.toString()));
+//			if (columnIndex == COL_COLABORADOR)
+//				chamado.setIdColaborador(null);
 //		else 
 //			if (columnIndex == COL_VEICULO) 
-//				chamado.setIdVeiculo(Integer.parseInt(aValue.toString()));
+//				chamado.setIdVeiculo(null);
 	}
 
 	public Class<?> getColumnClass(int columnIndex) {
@@ -98,5 +103,4 @@ public class ChamadoTableModel extends AbstractTableModel {
 	public Chamado get(int row) {
 		return valores.get(row);
 	}
-	
 }

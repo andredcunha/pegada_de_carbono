@@ -11,12 +11,17 @@ import java.util.List;
 import model.Chamado;
 import model.Colaborador;
 import model.Veiculo;
+import controller.VeiculoController;
+import controller.ChamadoController;
+import controller.ColaboradorController;
 import util.ConnectionUtil;
 
 public class ChamadoDao {
 
 	private static ChamadoDao instance;
 	private Connection con = ConnectionUtil.getConnection();
+	private String sqlvel;
+	private ResultSet velauton;
 	
 	public static ChamadoDao getInstance() {
 		if (instance == null) {
@@ -37,7 +42,10 @@ public class ChamadoDao {
 			pstmt.setInt(4, chamado.getIdVeiculo().getIdVeiculo());
 			pstmt.setDouble(5, chamado.getKmPercorrido());
 			pstmt.executeUpdate();
-			
+//			
+//			chamado.calculaCo2Emitido();
+			System.out.println("Co2Emitido:" + chamado.getCo2Emitido());
+//			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -81,6 +89,7 @@ public class ChamadoDao {
 			while (rs.next()) {
 				Chamado ch = new Chamado();
 				ch.setIdChamado(rs.getInt("id_chamado"));
+				System.out.println(ch.getIdChamado());
 				ch.setDataChamdo(rs.getDate("data_chamado").toLocalDate());
 				ch.setStatusChamado(rs.getBoolean("status_chamado"));
 				
@@ -88,14 +97,23 @@ public class ChamadoDao {
 				col.setIdColaborador(rs.getInt("colaborador_id_colaborador"));
 				Veiculo vel = new Veiculo();
 				vel.setIdVeiculo(rs.getInt("frota_id_veiculo"));
-				
 				ch.setIdColaborador(col);
 				ch.setIdVeiculo(vel);
-
 				
 				ch.setKmPercorrido(rs.getDouble("km_percorrido"));
 				
 				listaChamados.add(ch);
+				
+				int teste = vel.getIdVeiculo();
+				String sqlvel = ("select autonomia from frota where id_veiculo=" + teste + ";");
+				System.out.println("ID pego:" + teste + "String get banco:" + sqlvel);
+				Statement stmtvel = con.createStatement();
+				ResultSet velauton = stmtvel.executeQuery(sqlvel);
+				while (velauton.next()) {
+				ch.calculaCo2Emitido(velauton.getDouble("autonomia"));
+//				System.out.println("Valor recuperado do banco: ID veiculo: " + teste + "Autonomia:" + velauton.getDouble("autonomia"));
+				}
+//				ch.calculaCo2Emitido();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

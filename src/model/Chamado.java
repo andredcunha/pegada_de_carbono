@@ -30,16 +30,15 @@ public class Chamado {
 		this.statusChamado = false;
 	}
 	
-	public void encerraChamado(int idChamado, double kmPercorrido) {
-		// idChamdo será usado em implementação futura para mudar o status do chamado correspondente no banco de dados
-		this.statusChamado = true;
-		this.kmPercorrido = kmPercorrido;
-		calculaCo2Emitido();
-	}
+	public void calculaCo2Emitido(Double autonomia) {
+		if (kmPercorrido != 0) {
+//			Double cg = kmPercorrido / idVeiculo.getAutonomia();
+			Double cg = kmPercorrido / autonomia;
+			this.co2Emitido = (cg * 0.82 * 0.75 * 3.7);		
+		} else {
+			this.co2Emitido = 0.0;
+		}
 	
-	public void calculaCo2Emitido() {
-	Double cg = kmPercorrido / idVeiculo.getAutonomia();
-	this.co2Emitido = (cg * 0.82 * 0.75 * 3.7);
 	}
 	
 	public int getIdChamado() {

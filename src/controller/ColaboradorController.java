@@ -3,6 +3,7 @@ package controller;
 import java.util.List;
 
 import dao.ColaboradorDao;
+import dao.VeiculoDao;
 import model.Colaborador;
 
 public class ColaboradorController {
@@ -20,14 +21,12 @@ public class ColaboradorController {
 		}
 		ColaboradorDao.getInstance().atualizar(colaborador);
 	}
-	
 	public void excluir(int idColaborador) throws Exception {
 		if (idColaborador == 0) {
-			throw new Exception("Nenhum colaborador selecionado");
+			throw new Exception("Nenhum veiculo selecionado");
 		}
 		ColaboradorDao.getInstance().excluir(idColaborador);
 	}
-	
 	public List<Colaborador> listar(){
 		return ColaboradorDao.getInstance().listar();
 	}

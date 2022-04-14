@@ -58,7 +58,12 @@ public class Veiculo {
 	}
 // To string para facilitar reotrno do teste
 	public String toString() {
-		return "ID do veículo: " + idVeiculo + "\nPlaca: " + placa + "\nAutonomia: " + autonomia + "\n";
+//		return "ID do veículo: " + idVeiculo + "\nPlaca: " + placa + "\nAutonomia: " + autonomia + "\n";
+		if (disponibilidade) {
+			return modelo + " (Placa: " + placa + ")";
+		} else {
+			return "Veiculo Indisponível" + " (ID do veículo: " + idVeiculo + ")";	
+		}
 	}
 //*******************************************************************************//
 }

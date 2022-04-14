@@ -27,7 +27,12 @@ public class VeiculoController {
 		}
 		VeiculoDao.getInstance().excluir(idVeiculo);
 	}
-	
+	public void localizarVeiculo(int idVeiculo) throws Exception {
+		if (idVeiculo == 0) {
+			throw new Exception("Nenhum veiculo selecionado");
+		}
+		VeiculoDao.getInstance().localizar(idVeiculo);
+	}
 	public List<Veiculo> listar(){
 		return VeiculoDao.getInstance().listar();
 	}

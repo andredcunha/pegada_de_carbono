@@ -61,7 +61,13 @@ public class Colaborador {
 	}
 // To string para facilitar reotrno do teste
 	public String toString() {
-		return "ID do Colaborador: " + idColaborador + "\nNome: " + nome + "\nHabilitado:" + habilitado + "\n";
+//		return "ID do Colaborador: " + idColaborador + "\nNome: " + nome + "\nHabilitado:" + habilitado + "\n";
+		if (habilitado) {
+			return nome;
+		} else {
+			return "Colaborador sem habilitação" + "( ID do Colaborador: " + idColaborador + ")";	
+		}
+		
 	}
 //*******************************************************************************//
 	

@@ -36,7 +36,18 @@ public class VeiculoDao {
 			e.printStackTrace();
 		}
 	}
-	
+	public void localizar(int idVeiculo) {
+		try {
+			String sql = "select autonomia from veiculo where id_veiculo = ?";
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery(sql);
+				Veiculo v = new Veiculo();
+				v.setIdVeiculo(rs.getInt("id_veiculo"));
+				v.setAutonomia(rs.getDouble("autonomia"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	public void atualizar(Veiculo veiculo) {
 		try {
 			String sql = "update frota set placa = ?, autonomia = ?, disponibilidade = ?, modelo = ? where id_veiculo = ?";

@@ -13,11 +13,10 @@ import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import controller.ChamadoController;
-import controller.VeiculoController;
 import model.Chamado;
-import model.Veiculo;
+
 import view.tables.ChamadoTableModel;
-import view.tables.VeiculoTableModel;
+
 
 import javax.swing.JScrollPane;
 
@@ -63,6 +62,7 @@ public class ConsultaChamadosUI extends JInternalFrame {
 				cadChamadoUI.setChamadoEdicao(chamado);
 				cadChamadoUI.setVisible(true);
 				getParent().add(cadChamadoUI, 0);
+
 			}
 		});
 		
